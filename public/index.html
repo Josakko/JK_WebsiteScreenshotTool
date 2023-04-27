@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	    <link rel="stylesheet" href="style.css" />
+	    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico" />
+	    <title>JK Website Screenshot</title>
+    </head>
+    <body>
+        <h1>JK Website Screenshot Tool</h1>
+	    <form id="input">
+	        <input type="text" id="url" name="url" placeholder="Enter URL:">
+	        <button type="submit" id="submit">Generate Screenshot</button>
+	    </form>
+	    <img id="screenshot" alt="Your screenshot will be displayed here!" src="assets/placeholder.png">
+        <a id="downloadLink" style="display: none">Download</a>
+        <a href="#about" id="aboutLink">About</a>
+        <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>About JK Website Screenshot Tool</h2>
+            <p>
+            This is a website screenshot tool created by Josakko that allows you to
+            screenshot any website whit just its URL and save the screenshot as a image file. Visit my
+            github <a href="https://github.com/Josakko">here</a>.
+            </p>
+            <p>
+            To use this tool, all you need to do is paste the URL of the website that you want to screenshot 
+            and click on "Generate Screenshot" button and wait until the capturing screenshot is done!
+            If you need any help or find any bugs, please contact me on my
+            <a href="https://discord.gg/xgET5epJE6">discord server</a>.
+            </p>
+        </div>
+        </div>
+        <script src="js/script.js"></script>
+        <script src="js/about.js"></script>
+    </body>
+</html>
