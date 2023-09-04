@@ -4,13 +4,31 @@ const submit = document.querySelector("#submit");
 const urlInput = document.querySelector("#url");
 const downloadLink = document.querySelector("#downloadLink");
 
+
 const FullPage = true;
 const width = 1280; //1280
 const height = 720; //720
 
+
 submit.addEventListener("click", async (e) => {
     e.preventDefault();
-    const url = urlInput.value;
+    let url = urlInput.value;
+
+    if (!url.startsWith("http://")) {
+        if (!url.startsWith("https://")) {
+            url = "http://" + url;
+        }
+        //throw new Error("invalid url");
+        //alert("Invalid URL, make sure to include protocol in URL as well!");
+    }
+
+    try {
+        new URL(url)
+    } catch (e) {
+      throw new Error("invalid url");
+      alert("Invalid URL");
+    }
+
     submit.disabled = true;
     screenshot.style.border = "";
     screenshot.src = "assets/placeholder.png";
@@ -19,15 +37,15 @@ submit.addEventListener("click", async (e) => {
     document.title = "Capturing - JK Website Screenshot";
     
     try {
-        const response = await fetch('/screenshot', {
-            method: 'POST',
+        const res = await fetch("/api/screenshot", {
+            method: "POST",
             headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
             },
             body: JSON.stringify({ url, FullPage, width, height  })
         });
 
-        const blob = await response.blob();
+        const blob = await res.blob();
         const objectURL = URL.createObjectURL(blob);
 
         screenshot.src = objectURL;
@@ -49,3 +67,4 @@ submit.addEventListener("click", async (e) => {
         console.log("Error capturing screenshot, please make sure that entered URL is correct!");
     }
 });
+
