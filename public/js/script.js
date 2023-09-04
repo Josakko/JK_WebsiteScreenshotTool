@@ -25,8 +25,9 @@ submit.addEventListener("click", async (e) => {
     try {
         new URL(url)
     } catch (e) {
-      throw new Error("invalid url");
-      alert("Invalid URL");
+        alert("Invalid URL");
+        throw new Error("invalid url");
+        return;
     }
 
     submit.disabled = true;
