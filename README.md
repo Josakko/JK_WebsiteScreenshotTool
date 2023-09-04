@@ -5,11 +5,11 @@ Website for screenshoting other websites
 
 1. To setup the server your self first clone this repo:
 
-    git clone https://github.com/Josakko/JK_WebsiteScreenshotTool/
+        git clone https://github.com/Josakko/JK_WebsiteScreenshotTool/
 
 2. Next install open ssl (using apt on debian and other distros using apt):
 
-    sudo apt update && sudo apt install openssl -y
+        sudo apt update && sudo apt install openssl -y
 
 3. Now we will need private and public key along whit self signed certificate (self signed certificates arent ideal for production since browsers will warn users before visiting the site that proceeding is risky... so best is to get certificates signed by some certificate authority):
 
