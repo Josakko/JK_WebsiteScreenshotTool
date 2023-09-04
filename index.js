@@ -14,7 +14,7 @@ const logger = winston.createLogger({
   format: winston.format.json(),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: "error.log", level: "bad request error"}),
+    new winston.transports.File({ filename: "error.log", level: "error"}),
     new winston.transports.File({ filename: "combined.log" }),
   ],
 });
@@ -44,8 +44,9 @@ const logError = (e, req, res, next) => {
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, //15 mins
-  max: 100,
-  message: "You have exceded rate limit, too many requests from this ip, please try again later...",
+  max: 30,
+  message:
+    "You have exceeded rate limit, too many requests from this ip, please try again later...",
 });
 
 
@@ -95,7 +96,7 @@ app.post("/api/screenshot", async (req, res) => {
     res.send(screenshot);
 
   } catch (e) {
-    logger.error(e);
+    logger.error(e.message);
 
     if (e.message == "resolution too high") {
       res.status(400).send("Resolution too high!");
@@ -104,7 +105,7 @@ app.post("/api/screenshot", async (req, res) => {
     } else if (e.message == "invalid argument types") {
       res.status(400).send("Invalid argument type(s)!");
     } else {
-      res.status(500).send("Error!");
+      res.status(400).send("Invalid URL!");
     }
   }
 });
