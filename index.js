@@ -2,6 +2,7 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const https = require("https");
+const http = require("http");
 const validator = require("validator");
 const winston = require("winston");
 const rateLimit = require("express-rate-limit");
@@ -110,9 +111,22 @@ app.post("/api/screenshot", async (req, res) => {
 
 
 const port = 443;
+const httpPort = 80;
+
 const server = https.createServer(options, app);
 
 server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`HTTPS server listening on port ${port}`);
+});
+
+
+const httpServer = http.createServer((req, res) => {
+  const httpsUrl = `https://${req.headers.host}${req.url}`;
+  res.writeHead(301, { Location: httpsUrl });
+  res.end();
+});
+
+httpServer.listen(httpPort, () => {
+  console.log(`HTTP server listening on port ${httpPort}`);
 });
 
