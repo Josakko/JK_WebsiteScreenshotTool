@@ -25,11 +25,15 @@ Generate and sign certificate:
 
     openssl req -new -x509 -sha256 -key private.key -out certificate.crt -days 365
 
-4. Now just install all dependencies:
+4. Install node:
+
+        sudo apt install node -y
+
+5. Now just install all dependencies:
     
         npm install
 
-5. And that is it, run the server:
+6. And that is it, run the server:
 
         node .
 
