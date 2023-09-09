@@ -37,6 +37,8 @@ Generate and sign certificate:
 
         node .
 
+Server will now serve content on `https://localhost` or `http://localhost` which will redirect to `https://localhost`
+
 ## Demo
  
 Visit the website [here](). (not yet available)
