@@ -41,23 +41,39 @@ const logError = (e, req, res, next) => {
   next(e);
 };
 
+const logWarn = (req, res, msg) => {
+  logger.warn({
+    method: req.method,
+    url: req.originalUrl,
+    ip: req.ip,
+    message: msg,
+  });
+};
+
+
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, //15 mins
+  windowMs: 15 * 60 * 1000, // 15 mins
   max: 30,
   message:
-    "You have exceeded rate limit, too many requests from this ip, please try again later...",
+    "You have exceeded rate limit, too many requests from this IP, please try again later...",
+  handler: (req, res) => {
+    logWarn(req, res, "Rate limit exceeded");
+
+    res
+      .status(429)
+      .json( {"error": "Rate limit exceeded"} )
+  },
 });
 
 
 const app = express();
 
-app.use(express.static("public"));
 app.use(express.json());
 app.use(logRequest);
 app.use(logError);
 app.use(limiter);
-
+app.use(express.static("public"));
 
 const options = {
   key: fs.readFileSync("private.key"),
@@ -130,4 +146,3 @@ const httpServer = http.createServer((req, res) => {
 httpServer.listen(httpPort, () => {
   console.log(`HTTP server listening on port ${httpPort}`);
 });
-
